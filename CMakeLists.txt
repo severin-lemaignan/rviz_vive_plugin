@@ -23,9 +23,9 @@ message(STATUS "Found SDL at ${SDL2_INCLUDE_DIR}")
 include_directories(${SDL2_INCLUDE_DIR})
 
 ##Hardcoded OpenVR Path please change
-set(OPENVR "~/sse/openvr")
-include_directories("${OPENVR}/headers")
-link_directories("${OPENVR}/lib/linux64")
+set(OPENVR "~/dev")
+include_directories("${OPENVR}/include")
+link_directories("${OPENVR}/lib")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ")
 
 find_package(catkin REQUIRED COMPONENTS rviz)
