@@ -26,14 +26,14 @@ by Olive Kreylos. Check out http://idav.ucdavis.edu/~okreylos/ResDev/Vrui/
 #ifndef VIVE_SERVERDRIVERHOST_H
 #define VIVE_SERVERDRIVERHOST_H
 
-#include "openvr_driver.h"
+#include <openvr_driver.h>
 #include "vive_driver.h"
 #include <iostream>
 
 #include <OGRE/OgreVector3.h>
 #include <OGRE/OgreQuaternion.h>
 
-class ServerDriverHost: public vr::IServerDriverHost
+class ServerDriverHost: public vr::IVRServerDriverHost
 {
 public:
 	ServerDriverHost();
@@ -57,22 +57,24 @@ public:
 			}
 	};
 	
-	virtual bool TrackedDeviceAdded(const char* pchDeviceSerialNumber);
-	virtual void TrackedDevicePoseUpdated(uint32_t unWhichDevice,const vr::DriverPose_t& newPose);
-	virtual void TrackedDevicePropertiesChanged(uint32_t unWhichDevice);
-	virtual void VsyncEvent(double vsyncTimeOffsetSeconds);
-	virtual void TrackedDeviceButtonPressed(uint32_t unWhichDevice,vr::EVRButtonId eButtonId,double eventTimeOffset);
-	virtual void TrackedDeviceButtonUnpressed(uint32_t unWhichDevice,vr::EVRButtonId eButtonId,double eventTimeOffset);
-	virtual void TrackedDeviceButtonTouched(uint32_t unWhichDevice,vr::EVRButtonId eButtonId,double eventTimeOffset);
-	virtual void TrackedDeviceButtonUntouched(uint32_t unWhichDevice,vr::EVRButtonId eButtonId,double eventTimeOffset);
-	virtual void TrackedDeviceAxisUpdated(uint32_t unWhichDevice,uint32_t unWhichAxis,const vr::VRControllerAxis_t& axisState);
-	virtual void MCImageUpdated(void);
-	virtual vr::IVRSettings* GetSettings(const char* pchInterfaceVersion);
-	virtual void PhysicalIpdSet(uint32_t unWhichDevice,float fPhysicalIpdMeters);
-	virtual void ProximitySensorState(uint32_t unWhichDevice,bool bProximitySensorTriggered);
-	virtual void VendorSpecificEvent(uint32_t unWhichDevice,vr::EVREventType eventType,const vr::VREvent_Data_t& eventData,double eventTimeOffset);
-	virtual bool IsExiting(void);
-	virtual bool PollNextEvent( vr::VREvent_t *pEvent, uint32_t uncbVREvent );
+	virtual bool TrackedDeviceAdded( const char *pchDeviceSerialNumber, vr::ETrackedDeviceClass eDeviceClass, vr::ITrackedDeviceServerDriver *pDriver ) override;
+	virtual void TrackedDevicePoseUpdated( uint32_t unWhichDevice, const vr::DriverPose_t & newPose, uint32_t unPoseStructSize ) override;
+//	virtual void TrackedDevicePropertiesChanged(uint32_t unWhichDevice) override;
+	virtual void VsyncEvent(double vsyncTimeOffsetSeconds) override;
+//	virtual void TrackedDeviceButtonPressed(uint32_t unWhichDevice,vr::EVRButtonId eButtonId,double eventTimeOffset) override;
+//	virtual void TrackedDeviceButtonUnpressed(uint32_t unWhichDevice,vr::EVRButtonId eButtonId,double eventTimeOffset) override;
+//	virtual void TrackedDeviceButtonTouched(uint32_t unWhichDevice,vr::EVRButtonId eButtonId,double eventTimeOffset) override;
+//	virtual void TrackedDeviceButtonUntouched(uint32_t unWhichDevice,vr::EVRButtonId eButtonId,double eventTimeOffset) override;
+//	virtual void TrackedDeviceAxisUpdated(uint32_t unWhichDevice,uint32_t unWhichAxis,const vr::VRControllerAxis_t& axisState) override;
+//	virtual void MCImageUpdated(void) override;
+//	virtual vr::IVRSettings* GetSettings(const char* pchInterfaceVersion) override;
+//	virtual void PhysicalIpdSet(uint32_t unWhichDevice,float fPhysicalIpdMeters) override;
+//	virtual void ProximitySensorState(uint32_t unWhichDevice,bool bProximitySensorTriggered) override;
+	virtual void VendorSpecificEvent(uint32_t unWhichDevice,vr::EVREventType eventType,const vr::VREvent_Data_t& eventData,double eventTimeOffset) override;
+	virtual bool IsExiting(void) override;
+	virtual bool PollNextEvent( vr::VREvent_t *pEvent, uint32_t uncbVREvent ) override;
+	virtual void GetRawTrackedDevicePoses( float fPredictedSecondsFromNow, vr::TrackedDevicePose_t *pTrackedDevicePoseArray, uint32_t unTrackedDevicePoseArrayCount ) override {};
+	virtual void TrackedDeviceDisplayTransformUpdated( uint32_t unWhichDevice, vr::HmdMatrix34_t eyeToHeadLeft, vr::HmdMatrix34_t eyeToHeadRight ) override {};
 	
 	void Update();
 	

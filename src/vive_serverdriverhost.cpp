@@ -178,7 +178,7 @@ ServerDriverHost::ServerDriverHost()
 	}
 }
 
-bool ServerDriverHost::TrackedDeviceAdded(const char* pchDeviceSerialNumber)
+bool TrackedDeviceAdded( const char *pchDeviceSerialNumber, ETrackedDeviceClass eDeviceClass, ITrackedDeviceServerDriver *pDriver )
 {
 	bool result=false;
 	
@@ -212,7 +212,7 @@ bool ServerDriverHost::TrackedDeviceAdded(const char* pchDeviceSerialNumber)
 	return result;
 	}
 
-void ServerDriverHost::TrackedDevicePoseUpdated(uint32_t unWhichDevice,const vr::DriverPose_t& newPose)
+virtual void TrackedDevicePoseUpdated( uint32_t unWhichDevice, const DriverPose_t & newPose, uint32_t unPoseStructSize )
 {
 	DeviceState& state=deviceStates[unWhichDevice];
 	
@@ -282,16 +282,6 @@ void ServerDriverHost::TrackedDeviceButtonUnpressed(uint32_t unWhichDevice,vr::E
 	}
 }
 
-void ServerDriverHost::TrackedDeviceButtonTouched(uint32_t unWhichDevice,vr::EVRButtonId eButtonId,double eventTimeOffset)
-{
-
-}
-
-void ServerDriverHost::TrackedDeviceButtonUntouched(uint32_t unWhichDevice,vr::EVRButtonId eButtonId,double eventTimeOffset)
-{
-
-}
-
 void ServerDriverHost::TrackedDeviceAxisUpdated(uint32_t unWhichDevice,uint32_t unWhichAxis,const vr::VRControllerAxis_t& axisState)
 {
 	if(unWhichDevice>=1U)
@@ -303,10 +293,6 @@ void ServerDriverHost::TrackedDeviceAxisUpdated(uint32_t unWhichDevice,uint32_t 
 	}
 }
 
-void ServerDriverHost::MCImageUpdated(void)
-{
-
-}
 
 vr::IVRSettings* ServerDriverHost::GetSettings(const char* pchInterfaceVersion)
 {

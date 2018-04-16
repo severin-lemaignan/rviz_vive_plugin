@@ -26,11 +26,12 @@ by Olive Kreylos. Check out http://idav.ucdavis.edu/~okreylos/ResDev/Vrui/
 #ifndef VIVE_DRIVER_H
 #define VIVE_DRIVER_H
 
-#include "openvr_driver.h"
 #include <iostream>
 #include <cstring>
 
-class DriverLog:public vr::IDriverLog
+#include <openvr_driver.h>
+
+class DriverLog:public vr::IVRDriverLog
 {
 public:
 	DriverLog();
